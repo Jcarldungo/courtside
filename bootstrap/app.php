@@ -18,6 +18,16 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
         ]);
+
+        // Railway (like every PaaS) terminates TLS at its own edge and
+        // forwards plain HTTP internally with X-Forwarded-Proto: https.
+        // Without trusting that header, Laravel thinks every request is
+        // insecure -- url()/route() generate http:// links, the secure
+        // session cookie never gets sent back, and any POST built from one
+        // of those http:// URLs gets rejected before it reaches the app.
+        // '*' is safe here specifically because Railway's network puts the
+        // container behind its edge with no direct public ingress.
+        $middleware->trustProxies(at: '*');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         /*
