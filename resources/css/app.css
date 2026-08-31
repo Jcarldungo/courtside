@@ -1,2 +1,63 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
+
+/*
+ * Colour comes from CSS custom properties injected server-side (see
+ * App\Support\Venue::cssVariables()), not from values baked into the CSS.
+ * A venue re-skin edits config/venue.php; it never touches this file or
+ * triggers a rebuild. Tailwind's @theme layer just maps utility names onto
+ * those variables so `bg-brand` etc. work everywhere.
+ */
+@theme {
+  --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  --color-brand: var(--venue-brand, #1f6f4a);
+  --color-brand-strong: var(--venue-brand-strong, #16543a);
+  --color-brand-tint: var(--venue-brand-tint, #e8f3ed);
+  --color-accent: var(--venue-accent, #f2b33d);
+  --color-accent-strong: var(--venue-accent-strong, #d9931f);
+  --color-ink: var(--venue-ink, #12211b);
+  --color-surface: var(--venue-surface, #ffffff);
+  --color-surface-sunken: var(--venue-surface-sunken, #f5f7f6);
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  body {
+    background-color: var(--color-surface-sunken);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Visible focus everywhere, never suppressed for a mouse user's sake. */
+  :focus-visible {
+    outline: 2px solid var(--color-accent-strong);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  /* One tabular-nums utility for every scoreboard-style number: slot times,
+     prices, the countdown, the reference code. */
+  .font-score {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+  }
+}

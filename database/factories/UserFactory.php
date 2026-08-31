@@ -31,6 +31,11 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            // Eloquent never re-reads a column's DB-level default into the
+            // in-memory model after INSERT, so relying on the migration's
+            // default('staff') alone leaves $user->role null until a fresh
+            // fetch. Set it explicitly here instead.
+            'role' => UserRole::Staff,
         ];
     }
 

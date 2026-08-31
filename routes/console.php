@@ -1,8 +1,21 @@
 <?php
 
-use Illuminate\Foundation\Inspiring;
-use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Schedule;
 
-Artisan::command('inspire', function () {
-    $this->comment(Inspiring::quote());
-})->purpose('Display an inspiring quote');
+/*
+|--------------------------------------------------------------------------
+| Scheduled work
+|--------------------------------------------------------------------------
+|
+| Holds are released by a delayed queued job. This sweeper runs alongside it,
+| every minute, as the thing that keeps working when the queue worker does not.
+|
+| withoutOverlapping() matters on a cheap host, where a slow minute can leave
+| two copies of this command racing each other over the same rows.
+|
+*/
+
+Schedule::command('courtside:release-holds')
+    ->everyMinute()
+    ->withoutOverlapping()
+    ->runInBackground();

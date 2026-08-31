@@ -6,6 +6,7 @@ use App\Enums\BookingKind;
 use App\Enums\BookingStatus;
 use App\Exceptions\BookingException;
 use App\Exceptions\SlotUnavailableException;
+use App\Jobs\ReleaseExpiredHold;
 use App\Models\Booking;
 use App\Models\Court;
 use App\Models\User;
@@ -56,7 +57,7 @@ class BookingService
             $this->assertWithinBookingWindow($startsAt);
         }
 
-        return $this->insert($court, $startsAt, [
+        $booking = $this->insert($court, $startsAt, [
             'kind' => BookingKind::Booking,
             'status' => BookingStatus::Pending,
             'customer_name' => $guest['name'],
@@ -66,6 +67,12 @@ class BookingService
             'hold_expires_at' => now()->addMinutes($this->schedule->holdMinutes()),
             'created_by' => $staff?->id,
         ]);
+
+        // Release the slot the moment the payment window closes. The scheduled
+        // sweeper covers the case where this job is never delivered.
+        ReleaseExpiredHold::dispatch($booking)->delay($booking->hold_expires_at);
+
+        return $booking;
     }
 
     /**

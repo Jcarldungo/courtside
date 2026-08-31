@@ -9,7 +9,9 @@ export default function Authenticated({
     header,
     children,
 }: PropsWithChildren<{ header?: ReactNode }>) {
-    const user = usePage().props.auth.user;
+    // Only rendered behind the 'auth' middleware, so a user is guaranteed here
+    // even though the shared type allows null for the public pages.
+    const user = usePage().props.auth.user!;
 
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);

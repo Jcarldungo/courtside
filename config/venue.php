@@ -76,6 +76,13 @@ return [
     'hold_minutes' => (int) env('BOOKING_HOLD_MINUTES', 15),
 
     /*
+    | One-tap demo seeding and owner auto-login. A court owner will not create an
+    | account to evaluate software, so the demo has to be a single tap -- and for
+    | exactly that reason it must be off for a paying client.
+    */
+    'demo_mode' => (bool) env('DEMO_MODE', false),
+
+    /*
     | Colour is delivered as CSS custom properties at request time, which is why
     | a re-skin needs no `npm run build`. Tailwind's theme maps its brand
     | utilities onto these variables.
@@ -91,13 +98,15 @@ return [
         'surface-sunken' => '#f5f7f6',
     ],
 
+    // Photo credits (Unsplash License — free to use, attribution appreciated
+    // not required): hero by Youssef Sarhan, net-detail by Curtis Adams,
+    // evening-play by Milo Miloezger, paddle-detail by Meg Alt.
     'photos' => [
         'hero' => 'images/venue/hero.jpg',
         'gallery' => [
-            ['src' => 'images/venue/court-wide.jpg', 'alt' => 'Two covered pickleball courts with fresh green paint and white boundary lines.'],
-            ['src' => 'images/venue/evening-play.jpg', 'alt' => 'Players mid-rally on a floodlit court in the evening.'],
-            ['src' => 'images/venue/net-detail.jpg', 'alt' => 'Close-up of a regulation pickleball net across a freshly swept court.'],
-            ['src' => 'images/venue/lounge.jpg', 'alt' => 'Shaded waiting area with benches, electric fans and a water station.'],
+            ['src' => 'images/venue/evening-play.jpg', 'alt' => 'A player about to serve, pickleball net in view, on an outdoor court.'],
+            ['src' => 'images/venue/net-detail.jpg', 'alt' => 'Close-up of a regulation pickleball net stretched across a green court.'],
+            ['src' => 'images/venue/paddle-detail.jpg', 'alt' => 'Two pickleball balls resting on a paddle, ready for a rental pickup.'],
         ],
     ],
 
