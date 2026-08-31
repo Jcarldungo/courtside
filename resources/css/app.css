@@ -18,6 +18,14 @@
   --color-brand-tint: var(--venue-brand-tint, #e8f3ed);
   --color-accent: var(--venue-accent, #f2b33d);
   --color-accent-strong: var(--venue-accent-strong, #d9931f);
+  /*
+   * accent-strong reads at 2.6:1 on white -- fine as a background (with dark
+   * text on top) but fails WCAG AA the moment it IS the text colour. This is
+   * a fixed, separately-tuned shade of the same gold for exactly that case,
+   * not something a re-skin's venue.theme.accent-strong overrides -- a venue
+   * that changes its accent hue should re-check this value passes 4.5:1 too.
+   */
+  --color-accent-ink: #9c6508;
   --color-ink: var(--venue-ink, #12211b);
   --color-surface: var(--venue-surface, #ffffff);
   --color-surface-sunken: var(--venue-surface-sunken, #f5f7f6);

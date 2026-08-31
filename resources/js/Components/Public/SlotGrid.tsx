@@ -17,7 +17,7 @@ interface SlotGridProps {
 export default function SlotGrid({ board, unit, onSelectSlot }: SlotGridProps) {
     if (board.courts.length === 0) {
         return (
-            <p className="rounded-xl border border-dashed border-ink/20 bg-white p-6 text-center text-sm text-ink/60">
+            <p className="rounded-xl border border-dashed border-ink/20 bg-white p-6 text-center text-sm text-ink/70">
                 No {unit}s are open for booking right now.
             </p>
         );
@@ -28,7 +28,7 @@ export default function SlotGrid({ board, unit, onSelectSlot }: SlotGridProps) {
             <table className="w-full min-w-[420px] border-collapse text-sm">
                 <thead>
                     <tr className="border-b border-ink/10 bg-surface-sunken">
-                        <th scope="col" className="sticky left-0 z-10 bg-surface-sunken px-3 py-3 text-left font-display text-xs font-semibold uppercase tracking-wide text-ink/50">
+                        <th scope="col" className="sticky left-0 z-10 bg-surface-sunken px-3 py-3 text-left font-display text-xs font-semibold uppercase tracking-wide text-ink/70">
                             Time
                         </th>
                         {board.courts.map((court) => (
@@ -47,7 +47,7 @@ export default function SlotGrid({ board, unit, onSelectSlot }: SlotGridProps) {
                             >
                                 {slot.label}
                                 {slot.is_peak && (
-                                    <span className="ml-1.5 hidden text-[10px] font-sans font-semibold uppercase tracking-wide text-accent-strong sm:inline">
+                                    <span className="ml-1.5 hidden text-[10px] font-sans font-semibold uppercase tracking-wide text-accent-ink sm:inline">
                                         peak
                                     </span>
                                 )}
@@ -98,7 +98,7 @@ function CellBadge({ state }: { state: string }) {
     return (
         <span
             aria-label={state === 'past' ? 'Slot has passed' : copy[state] ?? state}
-            className="inline-flex w-full min-w-[64px] items-center justify-center rounded-lg border border-dashed border-ink/15 bg-surface-sunken px-2 py-2.5 text-[11px] font-medium text-ink/35 line-through decoration-ink/20"
+            className="inline-flex w-full min-w-[64px] items-center justify-center rounded-lg border border-dashed border-ink/15 bg-surface-sunken px-2 py-2.5 text-[11px] font-medium text-ink/70 line-through decoration-ink/20"
         >
             {copy[state] ?? state}
         </span>

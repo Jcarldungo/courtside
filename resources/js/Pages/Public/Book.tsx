@@ -64,7 +64,7 @@ export default function Book() {
 
             <div className="mx-auto max-w-5xl px-4 py-6">
                 <h1 className="font-display text-2xl font-bold text-ink sm:text-3xl">Book a {venue.unit}</h1>
-                <p className="mt-1 text-sm text-ink/60">Pick a time, then confirm with your name and number. Pay by {venue.payment.method} after.</p>
+                <p className="mt-1 text-sm text-ink/70">Pick a time, then confirm with your name and number. Pay by {venue.payment.method} after.</p>
 
                 {conflict && (
                     <div role="alert" className="mt-5 flex items-start gap-3 rounded-xl border border-amber-300 bg-amber-50 p-4">
@@ -107,7 +107,7 @@ export default function Book() {
                     ))}
                 </div>
 
-                <div className="mt-4 flex items-center justify-between text-sm text-ink/60">
+                <div className="mt-4 flex items-center justify-between text-sm text-ink/70">
                     <span>{board.date_label}{board.is_today && ' · Today'}</span>
                     <div className="flex items-center gap-3 text-xs">
                         <span className="flex items-center gap-1"><i className="h-2.5 w-2.5 rounded-full bg-brand-tint border border-brand/40" /> Open</span>

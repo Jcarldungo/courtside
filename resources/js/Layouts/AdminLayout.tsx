@@ -13,6 +13,13 @@ export default function AdminLayout({ children }: PropsWithChildren) {
 
     return (
         <div className="min-h-dvh bg-surface-sunken">
+            <a
+                href="#main-content"
+                className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-brand focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
+            >
+                Skip to content
+            </a>
+
             {demo.enabled && <DemoBanner />}
             <header className="border-b border-ink/10 bg-white">
                 <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
@@ -24,7 +31,7 @@ export default function AdminLayout({ children }: PropsWithChildren) {
                     </div>
 
                     <div className="flex items-center gap-4 text-sm">
-                        <Link href={route('home')} className="text-ink/50 hover:text-ink">
+                        <Link href={route('home')} className="text-ink/70 hover:text-ink">
                             View public site
                         </Link>
                         <span className="hidden text-ink/70 sm:inline">
@@ -41,7 +48,7 @@ export default function AdminLayout({ children }: PropsWithChildren) {
                 </div>
             </header>
 
-            <main className="mx-auto max-w-6xl px-4 py-6">{children}</main>
+            <main id="main-content" className="mx-auto max-w-6xl px-4 py-6">{children}</main>
         </div>
     );
 }

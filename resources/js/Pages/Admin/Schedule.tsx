@@ -43,7 +43,7 @@ export default function Schedule() {
                 </div>
             </div>
 
-            <p className="mt-1 text-sm text-ink/60">{board.date_label}{board.is_today && ' · Today'}</p>
+            <p className="mt-1 text-sm text-ink/70">{board.date_label}{board.is_today && ' · Today'}</p>
 
             {board.summary && (
                 <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -66,7 +66,7 @@ export default function Schedule() {
                         preserveScroll
                         replace
                         className={`flex shrink-0 flex-col items-center rounded-lg border px-3 py-1.5 text-xs ${
-                            day.date === board.date ? 'border-brand bg-brand text-white' : 'border-ink/10 bg-white text-ink/60'
+                            day.date === board.date ? 'border-brand bg-brand text-white' : 'border-ink/10 bg-white text-ink/70'
                         }`}
                     >
                         <span className="font-semibold uppercase tracking-wide opacity-80">{day.weekday}</span>
@@ -79,7 +79,7 @@ export default function Schedule() {
                 <AdminSlotGrid board={board} onSelectCell={setSelection} />
             </div>
 
-            <div className="mt-4 flex flex-wrap gap-4 text-xs text-ink/50">
+            <div className="mt-4 flex flex-wrap gap-4 text-xs text-ink/70">
                 <Legend swatchClass="bg-amber-50 border-amber-200" label="Awaiting payment" />
                 <Legend swatchClass="bg-amber-100 border-amber-400" label="Needs review" />
                 <Legend swatchClass="bg-brand-tint border-brand/30" label="Confirmed" />
@@ -94,7 +94,7 @@ export default function Schedule() {
 function SummaryTile({ label, value, highlight = false, mono = false }: { label: string; value: string; highlight?: boolean; mono?: boolean }) {
     return (
         <div className={`rounded-xl border p-3 ${highlight ? 'border-amber-300 bg-amber-50' : 'border-ink/10 bg-white'}`}>
-            <p className="text-[11px] font-medium uppercase tracking-wide text-ink/50">{label}</p>
+            <p className="text-[11px] font-medium uppercase tracking-wide text-ink/70">{label}</p>
             <p className={`mt-0.5 text-lg font-semibold ${mono ? 'font-score' : 'font-display'} ${highlight ? 'text-amber-700' : 'text-ink'}`}>{value}</p>
         </div>
     );

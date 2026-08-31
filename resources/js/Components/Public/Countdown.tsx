@@ -52,7 +52,7 @@ export default function Countdown({ initialSeconds, onExpire }: CountdownProps) 
             }`}
         >
             <span>{label}</span>
-            <span className="text-sm font-normal font-sans text-ink/60">left to pay</span>
+            <span className="text-sm font-normal font-sans text-ink/70">left to pay</span>
         </div>
     );
 }

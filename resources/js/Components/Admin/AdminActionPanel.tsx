@@ -3,6 +3,7 @@ import { router, useForm, usePage } from '@inertiajs/react';
 import { SelectedCell } from './AdminSlotGrid';
 import { XIcon } from '@/Components/Icons';
 import { PageProps } from '@/types';
+import { useModalA11y } from '@/Hooks/useModalA11y';
 
 interface AdminActionPanelProps {
     selection: SelectedCell | null;
@@ -16,6 +17,8 @@ interface AdminActionPanelProps {
  * situation, here's what you can do about it" in the same place.
  */
 export default function AdminActionPanel({ selection, onClose }: AdminActionPanelProps) {
+    const dialogRef = useModalA11y<HTMLDivElement>(selection !== null, onClose);
+
     if (!selection) {
         return null;
     }
@@ -24,15 +27,15 @@ export default function AdminActionPanel({ selection, onClose }: AdminActionPane
     const title = `${cell.label} · ${courtName}`;
 
     return (
-        <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center" role="dialog" aria-modal="true" aria-labelledby="admin-panel-title">
-            <button type="button" aria-label="Close" onClick={onClose} className="absolute inset-0 bg-ink/50" />
+        <div ref={dialogRef} className="fixed inset-0 z-50 flex items-end justify-center sm:items-center" role="dialog" aria-modal="true" aria-labelledby="admin-panel-title">
+            <button type="button" aria-label="Close" onClick={onClose} className="absolute inset-0 bg-ink/50" tabIndex={-1} />
 
             <div className="relative w-full max-w-md rounded-t-2xl bg-white p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] shadow-2xl sm:rounded-2xl">
                 <div className="mb-4 flex items-start justify-between gap-3">
                     <h2 id="admin-panel-title" className="font-display text-lg font-semibold text-ink">
                         {title}
                     </h2>
-                    <button type="button" onClick={onClose} aria-label="Close" className="rounded-full p-1.5 text-ink/40 hover:bg-surface-sunken hover:text-ink">
+                    <button type="button" onClick={onClose} aria-label="Close" className="rounded-full p-1.5 text-ink/70 hover:bg-surface-sunken hover:text-ink">
                         <XIcon width={20} height={20} />
                     </button>
                 </div>
@@ -60,10 +63,10 @@ function BlockForm({ courtId, startsAt, onDone }: { courtId: number; startsAt: s
 
     return (
         <form onSubmit={submit} className="space-y-4">
-            <p className="text-sm text-ink/60">This slot is open. Block it to take it off sale.</p>
+            <p className="text-sm text-ink/70">This slot is open. Block it to take it off sale.</p>
             <div>
                 <label htmlFor="reason" className="mb-1 block text-sm font-medium text-ink/80">
-                    Reason <span className="font-normal text-ink/40">(optional, staff-only)</span>
+                    Reason <span className="font-normal text-ink/70">(optional, staff-only)</span>
                 </label>
                 <input
                     id="reason"
@@ -102,7 +105,7 @@ function MaintenanceDetail({ booking, onDone }: { booking: NonNullable<SelectedC
 
     return (
         <div className="space-y-4">
-            <p className="text-sm text-ink/60">{booking.notes || 'Blocked for maintenance.'}</p>
+            <p className="text-sm text-ink/70">{booking.notes || 'Blocked for maintenance.'}</p>
             <button
                 type="button"
                 onClick={remove}
@@ -178,7 +181,7 @@ function PendingDetail({
                     </div>
                 </div>
             ) : (
-                <p className="rounded-xl border border-ink/10 bg-surface-sunken p-3 text-sm text-ink/60">
+                <p className="rounded-xl border border-ink/10 bg-surface-sunken p-3 text-sm text-ink/70">
                     Waiting for the customer to upload a GCash receipt. Nothing to verify yet.
                 </p>
             )}
@@ -187,7 +190,7 @@ function PendingDetail({
                 type="button"
                 onClick={() => act('cancel')}
                 disabled={processing !== null}
-                className="w-full rounded-xl border border-ink/15 py-2.5 text-sm font-medium text-ink/60 hover:bg-surface-sunken disabled:opacity-60"
+                className="w-full rounded-xl border border-ink/15 py-2.5 text-sm font-medium text-ink/70 hover:bg-surface-sunken disabled:opacity-60"
             >
                 {processing === 'cancel' ? 'Cancelling…' : 'Cancel this hold'}
             </button>
@@ -234,7 +237,7 @@ function ConfirmedDetail({
 function Row({ label, value, mono = false }: { label: string; value: string; mono?: boolean }) {
     return (
         <div className="flex items-center justify-between gap-3">
-            <dt className="text-ink/50">{label}</dt>
+            <dt className="text-ink/70">{label}</dt>
             <dd className={`text-right font-medium text-ink ${mono ? 'font-score' : ''}`}>{value}</dd>
         </div>
     );

@@ -46,7 +46,7 @@ export default function Booking() {
 
             <div className="mx-auto max-w-lg px-4 py-8">
                 <div className="rounded-2xl border border-ink/10 bg-white p-6 shadow-sm">
-                    <p className="text-xs font-semibold uppercase tracking-wide text-ink/40">Reference</p>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-ink/70">Reference</p>
                     <p className="font-score text-2xl font-bold tracking-wider text-ink">{booking.reference}</p>
 
                     <dl className="mt-4 space-y-2 border-t border-ink/10 pt-4 text-sm">
@@ -75,7 +75,7 @@ export default function Booking() {
 function Row({ label, value, mono = false }: { label: string; value: string; mono?: boolean }) {
     return (
         <div className="flex items-center justify-between gap-3">
-            <dt className="text-ink/50">{label}</dt>
+            <dt className="text-ink/70">{label}</dt>
             <dd className={`text-right font-medium text-ink ${mono ? 'font-score' : ''}`}>{value}</dd>
         </div>
     );
@@ -111,7 +111,7 @@ function PendingUnpaid({ booking, payment, contact }: { booking: BookingDetail; 
                     initialSeconds={booking.hold_seconds_remaining}
                     onExpire={() => router.reload({ only: ['booking'] })}
                 />
-                <p className="text-xs text-ink/50">Your slot is held until the timer runs out.</p>
+                <p className="text-xs text-ink/70">Your slot is held until the timer runs out.</p>
             </div>
 
             <div className="rounded-2xl border border-brand/20 bg-brand-tint p-5">
@@ -125,7 +125,7 @@ function PendingUnpaid({ booking, payment, contact }: { booking: BookingDetail; 
             </div>
 
             <form onSubmit={submit} className="rounded-2xl border border-ink/10 bg-white p-5">
-                <p className="text-xs font-semibold uppercase tracking-wide text-ink/50">Step 2 — Upload your receipt</p>
+                <p className="text-xs font-semibold uppercase tracking-wide text-ink/70">Step 2 — Upload your receipt</p>
 
                 <label
                     htmlFor="proof"
@@ -135,9 +135,9 @@ function PendingUnpaid({ booking, payment, contact }: { booking: BookingDetail; 
                         <img src={preview} alt="Selected GCash receipt preview" className="max-h-56 rounded-lg object-contain" />
                     ) : (
                         <>
-                            <UploadIcon width={28} height={28} className="text-ink/40" />
+                            <UploadIcon width={28} height={28} className="text-ink/70" />
                             <span className="text-sm font-medium text-ink/70">Tap to choose your GCash screenshot</span>
-                            <span className="text-xs text-ink/40">JPG or PNG, up to 5MB</span>
+                            <span className="text-xs text-ink/70">JPG or PNG, up to 5MB</span>
                         </>
                     )}
                     <input
@@ -153,7 +153,7 @@ function PendingUnpaid({ booking, payment, contact }: { booking: BookingDetail; 
 
                 <div className="mt-4">
                     <label htmlFor="payment_reference" className="mb-1 block text-sm font-medium text-ink/80">
-                        GCash reference number <span className="font-normal text-ink/40">(optional)</span>
+                        GCash reference number <span className="font-normal text-ink/70">(optional)</span>
                     </label>
                     <input
                         id="payment_reference"
@@ -179,7 +179,7 @@ function PendingUnpaid({ booking, payment, contact }: { booking: BookingDetail; 
                 </button>
             </form>
 
-            <p className="text-center text-xs text-ink/50">
+            <p className="text-center text-xs text-ink/70">
                 Trouble paying?{' '}
                 <a href={`tel:${contact.phone_link}`} className="font-medium text-brand-strong hover:underline">
                     Call {contact.phone}
@@ -217,9 +217,9 @@ function Confirmed({ contactPhone }: { contactPhone: string }) {
 function Expired({ unit }: { unit: string }) {
     return (
         <div className="flex flex-col items-center gap-3 rounded-2xl border border-ink/15 bg-white p-8 text-center">
-            <XIcon width={30} height={30} className="text-ink/40" />
+            <XIcon width={30} height={30} className="text-ink/70" />
             <p className="font-display text-lg font-semibold text-ink">This hold ran out</p>
-            <p className="text-sm text-ink/60">Payment didn't arrive in time, so the slot went back on sale.</p>
+            <p className="text-sm text-ink/70">Payment didn't arrive in time, so the slot went back on sale.</p>
             <Link href={route('book')} className="mt-2 rounded-xl bg-brand px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-strong">
                 Book another {unit}
             </Link>
@@ -230,9 +230,9 @@ function Expired({ unit }: { unit: string }) {
 function Cancelled({ reason, unit }: { reason: string | null; unit: string }) {
     return (
         <div className="flex flex-col items-center gap-3 rounded-2xl border border-ink/15 bg-white p-8 text-center">
-            <XIcon width={30} height={30} className="text-ink/40" />
+            <XIcon width={30} height={30} className="text-ink/70" />
             <p className="font-display text-lg font-semibold text-ink">Booking cancelled</p>
-            {reason && <p className="text-sm text-ink/60">{reason}</p>}
+            {reason && <p className="text-sm text-ink/70">{reason}</p>}
             <Link href={route('book')} className="mt-2 rounded-xl bg-brand px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-strong">
                 Book another {unit}
             </Link>

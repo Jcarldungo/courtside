@@ -15,6 +15,13 @@ export default function PublicLayout({ children }: PropsWithChildren) {
 
     return (
         <div className="flex min-h-dvh flex-col bg-surface-sunken">
+            <a
+                href="#main-content"
+                className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-brand focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
+            >
+                Skip to content
+            </a>
+
             {demo.enabled && <DemoBanner showEnterAdmin />}
 
             <header className="sticky top-0 z-30 border-b border-ink/10 bg-white/95 backdrop-blur">
@@ -44,13 +51,13 @@ export default function PublicLayout({ children }: PropsWithChildren) {
                 </div>
             </header>
 
-            <main className="flex-1 pb-24 sm:pb-0">{children}</main>
+            <main id="main-content" className="flex-1 pb-24 sm:pb-0">{children}</main>
 
             <footer className="border-t border-ink/10 bg-white">
                 <div className="mx-auto grid max-w-5xl gap-8 px-4 py-10 sm:grid-cols-3">
                     <div>
                         <p className="font-display text-lg font-semibold text-ink">{venue.name}</p>
-                        <p className="mt-1 text-sm text-ink/60">{venue.tagline}</p>
+                        <p className="mt-1 text-sm text-ink/70">{venue.tagline}</p>
                     </div>
                     <div className="text-sm text-ink/70">
                         <p className="flex items-start gap-2">
@@ -75,15 +82,15 @@ export default function PublicLayout({ children }: PropsWithChildren) {
                             href={venue.contact.open_play_url}
                             target="_blank"
                             rel="noreferrer"
-                            className="mt-2 block text-ink/50 hover:text-brand-strong hover:underline"
+                            className="mt-2 block text-ink/70 hover:text-brand-strong hover:underline"
                         >
                             Looking for open play instead? →
                         </a>
                     </div>
                 </div>
-                <div className="border-t border-ink/5 px-4 py-4 text-center text-xs text-ink/40">
+                <div className="border-t border-ink/5 px-4 py-4 text-center text-xs text-ink/70">
                     Site by{' '}
-                    <a href="https://janncarl.vercel.app" target="_blank" rel="noreferrer" className="underline hover:text-ink/60">
+                    <a href="https://janncarl.vercel.app" target="_blank" rel="noreferrer" className="underline hover:text-ink/70">
                         Jann Carl
                     </a>
                 </div>

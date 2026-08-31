@@ -23,7 +23,7 @@ export default function AdminSlotGrid({ board, onSelectCell }: AdminSlotGridProp
             <table className="w-full min-w-[480px] border-collapse text-sm">
                 <thead>
                     <tr className="border-b border-ink/10 bg-surface-sunken">
-                        <th scope="col" className="sticky left-0 z-10 bg-surface-sunken px-3 py-3 text-left font-display text-xs font-semibold uppercase tracking-wide text-ink/50">
+                        <th scope="col" className="sticky left-0 z-10 bg-surface-sunken px-3 py-3 text-left font-display text-xs font-semibold uppercase tracking-wide text-ink/70">
                             Time
                         </th>
                         {board.courts.map((court) => (
@@ -54,7 +54,7 @@ export default function AdminSlotGrid({ board, onSelectCell }: AdminSlotGridProp
                                                 <AdminCellContent cell={cell} />
                                             </button>
                                         ) : (
-                                            <span className="inline-flex w-full min-w-[76px] items-center justify-center rounded-lg border border-dashed border-ink/10 px-2 py-2.5 text-[11px] text-ink/30">
+                                            <span className="inline-flex w-full min-w-[76px] items-center justify-center rounded-lg border border-dashed border-ink/10 px-2 py-2.5 text-[11px] text-ink/70">
                                                 {cell.state === 'closed' ? 'Closed' : '—'}
                                             </span>
                                         )}
@@ -89,7 +89,7 @@ function cellClasses(cell: BoardCell): string {
 function AdminCellContent({ cell }: { cell: BoardCell }) {
     if (cell.state === 'open') {
         return (
-            <span className="block text-center text-[11px] font-semibold uppercase tracking-wide text-ink/40">
+            <span className="block text-center text-[11px] font-semibold uppercase tracking-wide text-ink/70">
                 + Block
             </span>
         );
@@ -108,7 +108,7 @@ function AdminCellContent({ cell }: { cell: BoardCell }) {
     return (
         <span className="block">
             <span className="block truncate text-xs font-semibold text-ink">{cell.booking.customer_name}</span>
-            <span className={`block text-[10px] font-medium uppercase tracking-wide ${urgent ? 'text-amber-700' : cell.state === 'confirmed' ? 'text-brand-strong' : 'text-amber-600'}`}>
+            <span className={`block text-[10px] font-medium uppercase tracking-wide ${urgent ? 'text-amber-700' : cell.state === 'confirmed' ? 'text-brand-strong' : 'text-amber-700'}`}>
                 {urgent ? 'Verify payment' : cell.state === 'confirmed' ? 'Confirmed' : 'Awaiting GCash'}
             </span>
         </span>

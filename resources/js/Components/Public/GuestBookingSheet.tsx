@@ -1,6 +1,7 @@
 import { FormEventHandler, useEffect, useRef } from 'react';
 import { useForm } from '@inertiajs/react';
 import { XIcon } from '@/Components/Icons';
+import { useModalA11y } from '@/Hooks/useModalA11y';
 
 interface SelectedSlot {
     courtId: number;
@@ -40,10 +41,11 @@ export default function GuestBookingSheet({ slot, onClose }: GuestBookingSheetPr
                 customer_phone: data.customer_phone,
             });
             clearErrors();
-            window.setTimeout(() => nameRef.current?.focus(), 50);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [slot?.startsAt, slot?.courtId]);
+
+    const dialogRef = useModalA11y<HTMLDivElement>(slot !== null, onClose, nameRef);
 
     if (!slot) {
         return null;
@@ -58,11 +60,12 @@ export default function GuestBookingSheet({ slot, onClose }: GuestBookingSheetPr
     };
 
     return (
-        <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center" role="dialog" aria-modal="true" aria-labelledby="guest-sheet-title">
+        <div ref={dialogRef} className="fixed inset-0 z-50 flex items-end justify-center sm:items-center" role="dialog" aria-modal="true" aria-labelledby="guest-sheet-title">
             <button
                 type="button"
                 aria-label="Close"
                 onClick={onClose}
+                tabIndex={-1}
                 className="absolute inset-0 bg-ink/50"
             />
 
@@ -73,13 +76,13 @@ export default function GuestBookingSheet({ slot, onClose }: GuestBookingSheetPr
                         <h2 id="guest-sheet-title" className="font-display text-xl font-semibold text-ink">
                             {slot.label}
                         </h2>
-                        <p className="font-score text-sm text-ink/60">{slot.priceLabel} for the hour</p>
+                        <p className="font-score text-sm text-ink/70">{slot.priceLabel} for the hour</p>
                     </div>
                     <button
                         type="button"
                         onClick={onClose}
                         aria-label="Cancel and close"
-                        className="rounded-full p-1.5 text-ink/40 hover:bg-surface-sunken hover:text-ink"
+                        className="rounded-full p-1.5 text-ink/70 hover:bg-surface-sunken hover:text-ink"
                     >
                         <XIcon width={20} height={20} />
                     </button>
@@ -119,7 +122,7 @@ export default function GuestBookingSheet({ slot, onClose }: GuestBookingSheetPr
                             required
                         />
                         {errors.customer_phone && <p className="mt-1 text-sm text-red-600">{errors.customer_phone}</p>}
-                        <p className="mt-1 text-xs text-ink/50">We'll call this number if the courts ever need to close on short notice.</p>
+                        <p className="mt-1 text-xs text-ink/70">We'll call this number if the courts ever need to close on short notice.</p>
                     </div>
 
                     {errors.court_id && <p className="text-sm text-red-600">{errors.court_id}</p>}
@@ -131,7 +134,7 @@ export default function GuestBookingSheet({ slot, onClose }: GuestBookingSheetPr
                     >
                         {processing ? 'Holding your slot…' : `Hold this slot — ${slot.priceLabel}`}
                     </button>
-                    <p className="text-center text-xs text-ink/50">No payment yet. You'll have 15 minutes to send GCash.</p>
+                    <p className="text-center text-xs text-ink/70">No payment yet. You'll have 15 minutes to send GCash.</p>
                 </form>
             </div>
         </div>

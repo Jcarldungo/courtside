@@ -106,21 +106,21 @@ export default function Landing() {
             {/* Rates */}
             <section id="rates" className="mx-auto max-w-5xl px-4 py-14">
                 <h2 className="font-display text-2xl font-bold text-ink sm:text-3xl">Rates</h2>
-                <p className="mt-1 text-sm text-ink/60">Priced per {venue.unit}, per hour. Peak is {venue.hours.peak_label}.</p>
+                <p className="mt-1 text-sm text-ink/70">Priced per {venue.unit}, per hour. Peak is {venue.hours.peak_label}.</p>
 
                 <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     {courts.map((court) => (
                         <div key={court.id} className="rounded-2xl border border-ink/10 bg-white p-5">
                             <p className="font-display text-lg font-semibold text-ink">{court.name}</p>
-                            {court.surface && <p className="text-xs text-ink/50">{court.surface}</p>}
+                            {court.surface && <p className="text-xs text-ink/70">{court.surface}</p>}
                             <dl className="mt-4 space-y-2 text-sm">
                                 <div className="flex items-center justify-between">
-                                    <dt className="text-ink/60">Off-peak</dt>
+                                    <dt className="text-ink/70">Off-peak</dt>
                                     <dd className="font-score font-semibold text-ink">{court.rate_offpeak_label}/hr</dd>
                                 </div>
                                 <div className="flex items-center justify-between">
-                                    <dt className="text-ink/60">Peak ({venue.hours.peak_label})</dt>
-                                    <dd className="font-score font-semibold text-accent-strong">{court.rate_peak_label}/hr</dd>
+                                    <dt className="text-ink/70">Peak ({venue.hours.peak_label})</dt>
+                                    <dd className="font-score font-semibold text-accent-ink">{court.rate_peak_label}/hr</dd>
                                 </div>
                             </dl>
                         </div>
@@ -136,7 +136,7 @@ export default function Landing() {
                         {venue.amenities.map((item) => (
                             <div key={item.label}>
                                 <p className="font-display text-base font-semibold text-ink">{item.label}</p>
-                                <p className="mt-0.5 text-sm text-ink/60">{item.detail}</p>
+                                <p className="mt-0.5 text-sm text-ink/70">{item.detail}</p>
                             </div>
                         ))}
                     </div>
@@ -166,7 +166,7 @@ export default function Landing() {
                         <ClockIcon width={22} height={22} className="text-brand-strong" />
                         <h3 className="mt-2 font-display text-lg font-semibold text-ink">Hours</h3>
                         <p className="mt-1 text-sm text-ink/70">{venue.hours.label}</p>
-                        <p className="text-sm text-ink/50">Peak: {venue.hours.peak_label}</p>
+                        <p className="text-sm text-ink/70">Peak: {venue.hours.peak_label}</p>
                     </div>
                     <div>
                         <PinIcon width={22} height={22} className="text-brand-strong" />
@@ -174,7 +174,7 @@ export default function Landing() {
                         <p className="mt-1 text-sm text-ink/70">
                             {venue.location.line1}, {venue.location.city}
                         </p>
-                        <p className="text-sm text-ink/50">{venue.location.landmark}</p>
+                        <p className="text-sm text-ink/70">{venue.location.landmark}</p>
                         <a href={venue.location.map_url} target="_blank" rel="noreferrer" className="mt-2 inline-block text-sm font-semibold text-brand-strong hover:underline">
                             Get directions →
                         </a>
