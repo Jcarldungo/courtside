@@ -65,7 +65,13 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    /*
+     * Laravel ships this hardcoded to UTC, which silently reinterprets every
+     * slot time: a 7pm booking becomes 7pm UTC, i.e. 3am the next day in
+     * Angeles City. A single-venue booking system reasons entirely in the
+     * venue's wall clock, so the venue's zone is the app's zone.
+     */
+    'timezone' => env('APP_TIMEZONE', 'UTC'),
 
     /*
     |--------------------------------------------------------------------------
