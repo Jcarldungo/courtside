@@ -110,6 +110,8 @@ class ScheduleBoard
                 'customer_phone' => $booking->customer_phone,
                 'amount_label' => $booking->amountLabel(),
                 'has_proof' => $booking->hasProof(),
+                'proof_url' => $booking->hasProof() ? asset('storage/'.$booking->payment_proof_path) : null,
+                'payment_reference' => $booking->payment_reference,
                 'notes' => $booking->notes,
             ];
         }

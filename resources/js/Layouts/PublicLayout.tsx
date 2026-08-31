@@ -2,6 +2,7 @@ import { PropsWithChildren } from 'react';
 import { Link, usePage } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import { PhoneIcon, PinIcon } from '@/Components/Icons';
+import DemoBanner from '@/Components/DemoBanner';
 
 /**
  * Shared chrome for every public page: header, footer, and a sticky mobile
@@ -14,11 +15,7 @@ export default function PublicLayout({ children }: PropsWithChildren) {
 
     return (
         <div className="flex min-h-dvh flex-col bg-surface-sunken">
-            {demo.enabled && (
-                <div className="bg-accent px-4 py-1.5 text-center text-xs font-semibold text-ink">
-                    DEMO — this is a live sample venue. Nothing booked here is real.
-                </div>
-            )}
+            {demo.enabled && <DemoBanner showEnterAdmin />}
 
             <header className="sticky top-0 z-30 border-b border-ink/10 bg-white/95 backdrop-blur">
                 <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3">

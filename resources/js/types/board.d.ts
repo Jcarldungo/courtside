@@ -21,6 +21,8 @@ export interface BoardCellBooking {
     customer_phone: string | null;
     amount_label: string;
     has_proof: boolean;
+    proof_url: string | null;
+    payment_reference: string | null;
     notes: string | null;
 }
 

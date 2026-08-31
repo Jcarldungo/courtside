@@ -144,6 +144,20 @@ function PendingDetail({
             {booking.has_proof ? (
                 <div className="rounded-xl border border-amber-200 bg-amber-50 p-3">
                     <p className="text-sm font-medium text-amber-900">Receipt uploaded — check it against GCash before confirming.</p>
+                    {booking.proof_url && (
+                        <a href={booking.proof_url} target="_blank" rel="noreferrer" className="mt-2 block">
+                            <img
+                                src={booking.proof_url}
+                                alt={`GCash receipt uploaded for booking ${booking.reference}`}
+                                className="max-h-48 w-full rounded-lg border border-amber-200 object-contain bg-white"
+                            />
+                        </a>
+                    )}
+                    {booking.payment_reference && (
+                        <p className="mt-2 text-xs text-amber-800">
+                            GCash ref: <span className="font-score">{booking.payment_reference}</span>
+                        </p>
+                    )}
                     <div className="mt-3 grid grid-cols-2 gap-2">
                         <button
                             type="button"

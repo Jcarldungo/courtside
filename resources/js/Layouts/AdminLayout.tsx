@@ -1,6 +1,7 @@
 import { PropsWithChildren } from 'react';
 import { Link, router, usePage } from '@inertiajs/react';
 import { PageProps } from '@/types';
+import DemoBanner from '@/Components/DemoBanner';
 
 /**
  * Deliberately plain: this is a work surface for a counter shift, not a
@@ -8,10 +9,11 @@ import { PageProps } from '@/types';
  * who's logged in, and a way out.
  */
 export default function AdminLayout({ children }: PropsWithChildren) {
-    const { venue, auth } = usePage<PageProps>().props;
+    const { venue, auth, demo } = usePage<PageProps>().props;
 
     return (
         <div className="min-h-dvh bg-surface-sunken">
+            {demo.enabled && <DemoBanner />}
             <header className="border-b border-ink/10 bg-white">
                 <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
                     <div className="flex items-center gap-2">
