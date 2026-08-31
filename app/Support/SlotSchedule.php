@@ -110,6 +110,61 @@ class SlotSchedule
         return CarbonImmutable::instance($at)->lessThan($this->lastBookableDate()->addDay()->startOfDay());
     }
 
+    /**
+     * Turns a `?date=` query value into a real date, defaulting to today for
+     * anything missing or malformed -- a stale link pasted from a Messenger
+     * thread should still land on a usable page, not a 404.
+     *
+     * Staff reconciling yesterday's payments need to look backward, so the
+     * admin schedule passes $allowPast; the public booking grid never does.
+     */
+    public function resolveDate(mixed $input, bool $allowPast = false): CarbonImmutable
+    {
+        $today = CarbonImmutable::today();
+
+        if (! is_string($input)) {
+            return $today;
+        }
+
+        try {
+            $date = CarbonImmutable::createFromFormat('Y-m-d', $input)->startOfDay();
+        } catch (\Throwable) {
+            return $today;
+        }
+
+        if (! $allowPast && $date->lessThan($today)) {
+            return $today;
+        }
+
+        return $date->greaterThan($this->lastBookableDate())
+            ? $this->lastBookableDate()
+            : $date;
+    }
+
+    /**
+     * The horizontal date picker: today plus the booking window.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function dateStrip(): array
+    {
+        $today = CarbonImmutable::today();
+
+        return collect(range(0, $this->advanceDays()))
+            ->map(function (int $offset) use ($today) {
+                $date = $today->addDays($offset);
+
+                return [
+                    'date' => $date->format('Y-m-d'),
+                    'weekday' => $date->isoFormat('ddd'),
+                    'day' => $date->format('j'),
+                    'month' => $date->isoFormat('MMM'),
+                    'is_today' => $offset === 0,
+                    'is_weekend' => $date->isWeekend(),
+                ];
+            })->all();
+    }
+
     protected function at(CarbonInterface $date, string $time): CarbonImmutable
     {
         [$hour, $minute] = array_map('intval', explode(':', $time));

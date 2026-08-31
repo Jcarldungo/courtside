@@ -45,7 +45,10 @@ return Application::configure(basePath: dirname(__DIR__))
         });
 
         // A request that was wrong on its face: off-grid slot, closed court,
-        // illegal state transition. Unprocessable, not conflicting.
+        // illegal state transition. Unprocessable, not conflicting. Filed
+        // under a generic 'booking' key rather than 'starts_at' -- this also
+        // catches admin actions like confirm/reject/cancel that have no
+        // starts_at field at all.
         $exceptions->render(function (BookingException $e, Request $request) {
             if ($request->expectsJson() && ! $request->header('X-Inertia')) {
                 return response()->json(['message' => $e->getMessage()], 422);
@@ -53,6 +56,6 @@ return Application::configure(basePath: dirname(__DIR__))
 
             return back(303)
                 ->withInput()
-                ->withErrors(['starts_at' => $e->getMessage()]);
+                ->withErrors(['booking' => $e->getMessage()]);
         });
     })->create();

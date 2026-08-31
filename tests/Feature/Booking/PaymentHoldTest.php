@@ -91,6 +91,7 @@ it('never expires a hold once GCash proof has been uploaded', function () {
 it('leaves a confirmed booking alone', function () {
     $staff = User::factory()->staff()->create();
     $booking = $this->service->hold($this->court, $this->peak, ['name' => 'Miguel Santos', 'phone' => '09171234567']);
+    $this->service->attachProof($booking, 'proofs/receipt.png');
     $this->service->confirm($booking, $staff);
 
     Carbon::setTestNow(Carbon::now()->addHours(3));
@@ -149,6 +150,16 @@ it('records who confirmed a payment and when', function () {
         ->and($confirmed->confirmed_by)->toBe($staff->id)
         ->and($confirmed->confirmed_at->eq(Carbon::now()))->toBeTrue()
         ->and($confirmed->hold_expires_at)->toBeNull();
+});
+
+it('refuses to confirm a hold nobody has paid on yet', function () {
+    $staff = User::factory()->staff()->create();
+    $booking = $this->service->hold($this->court, $this->peak, ['name' => 'Miguel Santos', 'phone' => '09171234567']);
+
+    expect(fn () => $this->service->confirm($booking, $staff))
+        ->toThrow(\App\Exceptions\BookingException::class, 'No payment proof');
+
+    expect($booking->fresh()->status)->toBe(BookingStatus::Pending);
 });
 
 it('puts the slot back on sale when staff reject the proof', function () {

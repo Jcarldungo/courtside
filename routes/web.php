@@ -1,12 +1,14 @@
 <?php
 
+use App\Http\Controllers\Admin\BookingActionController;
+use App\Http\Controllers\Admin\MaintenanceBlockController;
+use App\Http\Controllers\Admin\ScheduleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Public\BookingBoardController;
 use App\Http\Controllers\Public\BookingController;
 use App\Http\Controllers\Public\LandingController;
 use App\Http\Controllers\Public\PaymentProofController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,13 +38,27 @@ Route::post('/b/{booking:reference}/proof', [PaymentProofController::class, 'sto
 |--------------------------------------------------------------------------
 | Staff
 |--------------------------------------------------------------------------
+|
+| Every account in this system's users table is an owner or staff login
+| provisioned with `php artisan courtside:staff` -- there is no public
+| registration and no third role -- so `auth` alone is the correct gate for
+| all of it. Nothing here checks for owner specifically: v1 gives staff and
+| owner the same admin capabilities.
+|
 */
 
-// Replaced by the real admin schedule in the staff phase; Breeze points its
-// post-login redirect at this name.
-Route::get('/dashboard', fn () => Inertia::render('Dashboard'))
-    ->middleware(['auth', 'verified'])
+// Named 'dashboard' because Breeze's login redirect targets that name; the
+// URL and the name don't have to match.
+Route::get('/admin', ScheduleController::class)
+    ->middleware('auth')
     ->name('dashboard');
+
+Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
+    Route::post('/bookings/{booking}/confirm', [BookingActionController::class, 'confirm'])->name('bookings.confirm');
+    Route::post('/bookings/{booking}/reject', [BookingActionController::class, 'reject'])->name('bookings.reject');
+    Route::post('/bookings/{booking}/cancel', [BookingActionController::class, 'cancel'])->name('bookings.cancel');
+    Route::post('/maintenance', [MaintenanceBlockController::class, 'store'])->name('maintenance.store');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

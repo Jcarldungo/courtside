@@ -114,6 +114,7 @@ it('frees the slot when an unpaid hold expires', function () {
 it('frees the slot when a confirmed booking is cancelled', function () {
     $booking = $this->service->hold($this->court, $this->peak, guest());
     $staff = User::factory()->owner()->create();
+    $this->service->attachProof($booking, 'proofs/receipt.png');
     $this->service->confirm($booking, $staff);
 
     $this->service->cancel($booking->fresh(), $staff, 'Customer requested refund');

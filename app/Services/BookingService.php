@@ -134,6 +134,12 @@ class BookingService
             throw BookingException::notPending();
         }
 
+        // Nothing to verify without a receipt: confirming here would mark an
+        // unpaid hold as paid on a stray click.
+        if (! $booking->hasProof()) {
+            throw BookingException::noProofToVerify();
+        }
+
         $booking->update([
             'status' => BookingStatus::Confirmed,
             'confirmed_at' => now(),
